@@ -31,6 +31,7 @@ Feature: Create a booking information and store the booking id
     Given The base URI "https://restful-booker.herokuapp.com/"
     When Get the booking ids using firstName,lastName and checkIn,CheckOut "<firstname>","<lastname>","<checkIn>","<checkOut>"
     Then verify if the creator id is present in the id
+    And Validate the Response message
     Examples:
       | firstname | lastname | checkIn    | checkOut   |
       | Sruthi    | Shri     |            |            |

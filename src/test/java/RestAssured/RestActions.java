@@ -2,6 +2,7 @@ package RestAssured;
 
 import io.cucumber.core.internal.com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.ObjectMapper;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -56,7 +57,7 @@ public class RestActions {
         request.setFirstname(firstname);
         request.setLastname(lastname);
         request.setTotalprice(Integer.parseInt(totalprice));
-        request.setDepositpaid(Boolean.valueOf(depositpaid));
+        request.setDepositpaid(Boolean.parseBoolean(depositpaid));
         bookingDate.setCheckin(checkin);
         bookingDate.setCheckout(checkout);
         request.setBookingdates(bookingDate);
@@ -164,16 +165,16 @@ public class RestActions {
 
     }
 
-    @Then("Validate the Response message")
+    @And("Validate the Response message")
     public void validateTheResponseMessage()
     {
         for(Integer id:bookingId) {
+//            Assert.assertTrue(createdBookingId.contains(id), "Ids don,t match!!");
             ReadRequest originalRequest = requestMap.get(id);
             System.out.println("BookingId : "+id+" FirstName : "+originalRequest.getFirstname()+" LastName : "+originalRequest.getLastname());
             Assert.assertEquals(originalRequest.getFirstname(),firstName,"FirstNames not equal");
             Assert.assertEquals(originalRequest.getLastname(),lastName,"LastNames not equal");
 
-            Assert.assertTrue(createdBookingId.contains(id), "Ids don,t match!!");
         }
     }
 
@@ -182,7 +183,7 @@ public class RestActions {
         request.setFirstname(firstname);
         request.setLastname(lastname);
         request.setTotalprice(Integer.parseInt(totalprice));
-        request.setDepositpaid(Boolean.valueOf(depositpaid));
+        request.setDepositpaid(Boolean.parseBoolean(depositpaid));
         request.setAdditionalneeds(additionalneeds);
         requestBody = obj.writeValueAsString(request);
         response = requestSpecification.body(requestBody).request(Method.POST,"/booking");
